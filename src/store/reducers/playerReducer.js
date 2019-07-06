@@ -1,4 +1,5 @@
 const INITIAL_STATE = {
+    isLogged: false,
     hp: 0,
     hpMax: 0,
     mp: 0,
@@ -22,7 +23,11 @@ const INITIAL_STATE = {
 }
 
 export default function playerReducer(state = INITIAL_STATE, action) {
-    switch (action) {
+    switch (action.type) {
+        case "PLAYER_LOGIN":
+            return { ...state, isLogged: true }
+        case "PLAYER_LOGOUT":
+            return { ...state, isLogged: false }
         case "NEW_PLAYER":
             return { ...state, ...action.payload }
         case "ADD_HP":
