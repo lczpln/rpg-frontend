@@ -1,5 +1,6 @@
 @import "./login.scss";
 @import "./home/playerBars.scss";
+@import "./home/index.scss";
 @import "./styleGuide.scss";
 
 * {
@@ -34,6 +35,13 @@ input[type="submit"] {
     opacity: 0.9;
     cursor: pointer;
   }
+}
+
+.creature-name {
+  font-weight: 900 !important;
+  font-size: 14px;
+  color: $success-dark;
+  text-shadow: #000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
 }
 
 .flex {

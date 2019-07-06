@@ -1,9 +1,19 @@
 import React, { useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { playerLevelUp } from '../store/actions/playerActions';
 
 export default function Auth({ children }) {
     const isLogged = useSelector(state => state.player.isLogged);
+    const player = useSelector(state => state.player);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (player.exp >= player.expMax) {
+            dispatch(playerLevelUp())
+        }
+    }, [player.exp])
 
     useEffect(() => {
         const user = window.localStorage.getItem("user") || null;

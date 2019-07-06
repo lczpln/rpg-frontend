@@ -1,0 +1,40 @@
+@import "./styleGuide.scss";
+
+div.player-card {
+  background-color: $ocean;
+  width: 450px;
+  max-width: 80%;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+div.player-card div.portrait {
+  border-radius: 50%;
+  width: 110px;
+  height: 110px;
+  background-color: $white-dark;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+div.description {
+  flex: 1;
+  padding-left: 50px;
+}
+
+div.player-card h3.description {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: $white;
+}
+
+h3.description span {
+  font-weight: 400;
+  color: $white-dark;
+}

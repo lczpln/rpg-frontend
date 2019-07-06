@@ -1,14 +1,22 @@
 const INITIAL_STATE = {
     isLogged: false,
-    hp: 0,
-    hpMax: 0,
-    mp: 0,
-    mpMax: 0,
-    atk: 0,
-    def: 0,
+    playerName: 'Admin',
+    hp: 75,
+    hpMax: 100,
+    mp: 100,
+    mpMax: 100,
+    atk: 12,
+    def: 20,
     exp: 0,
-    expMax: 0,
-    level: 0,
+    expMax: 100,
+    level: 1,
+    gold: 0,
+    gainPerLevel: {
+        hp: 14,
+        mp: 10,
+        atk: 8,
+        def: 20,
+    },
     equiped: {
         handRight: '',
         handLeft: '',
@@ -21,6 +29,8 @@ const INITIAL_STATE = {
     },
     spells: []
 }
+
+const expFormula = INITIAL_STATE.level + 1 * 300 + 100;
 
 export default function playerReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
@@ -43,11 +53,18 @@ export default function playerReducer(state = INITIAL_STATE, action) {
         case "ADD_DEF":
             return { ...state, def: action.payload }
         case "ADD_EXP":
-            return { ...state, exp: action.payload }
-        case "ADD_EXP_MAX":
-            return { ...state, expMax: action.payload }
+            return { ...state, exp: state.exp + action.payload }
         case "ADD_LEVEL":
-            return { ...state, level: action.payload }
+            return {
+                ...state,
+                exp: 0,
+                expMax: expFormula,
+                hpMax: state.hpMax + state.gainPerLevel.hp,
+                mpMax: state.mpMax + state.gainPerLevel.mp,
+                atk: state.atk + state.gainPerLevel.atk,
+                def: state.def + state.gainPerLevel.def,
+                level: state.level + 1
+            }
         default:
             return { ...state }
     }
