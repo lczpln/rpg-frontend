@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { playerLogin } from '../store/actions/playerActions';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import loginImg from '../static/img/login.svg';
 import loadingImg from '../static/img/loading.svg';
 
 export default function Login(props) {
+    const isLogged = useSelector(state => state.player.isLogged);
     const [user, setUser] = useState({
         username: '',
         password: ''
@@ -18,6 +19,16 @@ export default function Login(props) {
     const dispatch = useDispatch();
 
     var loginInterval = null;
+
+    useEffect(() => {
+        const user = window.localStorage.getItem("user") || null;
+
+        if (user && !isLogged) {
+            setLoading(true)
+            dispatch(playerLogin());
+            loginInterval = setTimeout(() => { setLoading(false); props.history.push('/home') }, 1000)
+        }
+    }, [])
 
     function makeLogin(e) {
         clearTimeout(loginInterval);

@@ -1,11 +1,13 @@
 import React from 'react';
 
-// import { Container } from './styles';
+import { useSelector } from 'react-redux';
+import PlayerBars from '../components/playerBars';
 
 export default function Home(props) {
+    const player = useSelector(state => state.player);
     return (
-
-        <h3>Estou logado</h3>
-
+        <div>
+            <PlayerBars player={player} />
+        </div>
     );
 }
