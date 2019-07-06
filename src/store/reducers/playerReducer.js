@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     def: 20,
     exp: 0,
     expMax: 100,
+    expFormula: 0,
     level: 1,
     gold: 0,
     gainPerLevel: {
@@ -30,7 +31,6 @@ const INITIAL_STATE = {
     spells: []
 }
 
-const expFormula = INITIAL_STATE.level + 1 * 300 + 100;
 
 export default function playerReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
@@ -58,7 +58,8 @@ export default function playerReducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 exp: 0,
-                expMax: expFormula,
+                expMax: state.expFormula,
+                expFormula: (state.level * 2) * 300 + 150,
                 hpMax: state.hpMax + state.gainPerLevel.hp,
                 mpMax: state.mpMax + state.gainPerLevel.mp,
                 atk: state.atk + state.gainPerLevel.atk,
