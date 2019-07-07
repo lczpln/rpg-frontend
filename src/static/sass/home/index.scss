@@ -12,6 +12,14 @@ div.player-card {
   align-items: center;
 }
 
+button.play {
+  width: 200px;
+  height: 200px;
+  font-size: 3rem;
+  border-radius: 50% !important;
+  margin: 20px auto;
+}
+
 div.player-card div.portrait {
   border-radius: 50%;
   width: 110px;
@@ -29,12 +37,16 @@ div.description {
 }
 
 div.player-card h3.description {
+  font-size: 20px;
   font-weight: 600;
   text-transform: uppercase;
   color: $white;
 }
 
 h3.description span {
-  font-weight: 400;
+  font-size: 20px;
+  font-family: monospace;
+  font-weight: 900;
   color: $white-dark;
+  text-shadow: #000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
 }

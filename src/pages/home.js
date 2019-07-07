@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
-
-import { playerAddExp } from '../store/actions/playerActions';
+import { useSelector } from 'react-redux';
 
 import PlayerBars from '../components/playerBars';
 
 export default function Home(props) {
     const player = useSelector(state => state.player);
-    const dispatch = useDispatch();
 
     return (
         <div>
@@ -23,8 +20,10 @@ export default function Home(props) {
                         <h3 className="description">Def: <span>{player.def}</span></h3>
                         <h3 className="description">Level: <span>{player.level}</span></h3>
                         <h3 className="description">Gold: <span>{player.gold}</span></h3>
-                        <button className="send mt-4" onClick={() => dispatch(playerAddExp(100))}>ADD EXP TESTE</button>
                     </div>
+                </div>
+                <div className="flex justify-center">
+                    <button className="send play">PLAY !</button>
                 </div>
                 <PlayerBars player={player} />
             </div>

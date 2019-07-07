@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     isLogged: false,
     playerName: 'Admin',
+    playerClass: 'knight',
     hp: 75,
     hpMax: 100,
     mp: 100,
@@ -8,8 +9,7 @@ const INITIAL_STATE = {
     atk: 12,
     def: 20,
     exp: 0,
-    expMax: 100,
-    expFormula: 0,
+    expMax: 750,
     level: 1,
     gold: 0,
     gainPerLevel: {
@@ -58,8 +58,7 @@ export default function playerReducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 exp: 0,
-                expMax: state.expFormula,
-                expFormula: (state.level * 2) * 300 + 150,
+                expMax: ((state.level + 1) * 2) * 300 + 150,
                 hpMax: state.hpMax + state.gainPerLevel.hp,
                 mpMax: state.mpMax + state.gainPerLevel.mp,
                 atk: state.atk + state.gainPerLevel.atk,
