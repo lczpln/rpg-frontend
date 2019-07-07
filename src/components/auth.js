@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { playerLevelUp } from '../store/actions/playerActions';
+import api from '../static/services/api';
 
 export default function Auth({ children }) {
     const player = useSelector(state => state.player);
@@ -14,19 +15,24 @@ export default function Auth({ children }) {
     }, [player.exp])
 
     useEffect(() => {
-        const user = window.localStorage.getItem("user") || null;
+        playerSave()
+    }, [player])
 
+    useEffect(() => {
         if (!player.isLogged && window.location.pathname !== '/') {
-            if (user) window.localStorage.setItem("user", false)
             window.location.href = "/";
         }
+    })
 
+    async function playerSave() {
+        if (!player.isLogged) return false;
 
-        if (!user && player.isLogged) {
-            window.localStorage.setItem("user", true);
+        try {
+            await api.put(`/player/${player._id}`, player);
+        } catch (error) {
+            return alert("Player save error, you lost connect to server ?");
         }
-
-    }, [player.isLogged])
+    }
 
     return (player.isLogged || window.location.pathname === '/') ? children : <div />;
 }

@@ -13,6 +13,12 @@
   font-size: 16px;
   outline: none;
   box-sizing: border-box;
+  cursor: default;
+}
+
+input[type="text"],
+input[type="password"] {
+  cursor: text;
 }
 
 html {
@@ -42,6 +48,11 @@ input[type="submit"] {
   &:hover {
     opacity: 0.9;
     cursor: pointer;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
@@ -165,4 +176,24 @@ span {
 
 .mb-5 {
   margin-bottom: 1.5em;
+}
+
+.p-1 {
+  padding: 0.25em;
+}
+
+.p-2 {
+  padding: 0.5em;
+}
+
+.p-3 {
+  padding: 1em;
+}
+
+.p-4 {
+  padding: 1.25em;
+}
+
+.p-5 {
+  padding: 1.5em;
 }
