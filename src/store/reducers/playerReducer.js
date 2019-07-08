@@ -66,8 +66,8 @@ export default function playerReducer(state = INITIAL_STATE, action) {
                 } else {
                     state.inventary.map(item => (
                         item.name === action.payload.name
-                            ? newInventaryAfterAddItem.push({ ...item, qtd: item.qtd - action.payload.qtd })
-                            : newInventaryAfterAddItem.push(item)
+                            ? newInventaryAfterRemoveItem.push({ ...item, qtd: item.qtd - action.payload.qtd })
+                            : newInventaryAfterRemoveItem.push(item)
                     ))
                 }
 
