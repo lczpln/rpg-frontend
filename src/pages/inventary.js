@@ -1,17 +1,48 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { Link } from 'react-router-dom'
+
+import { playerAddHp, playerRemoveItem } from '../store/actions/playerActions';
+
+import inventaryImg from '../static/img/icon-inventary.svg'
+import backImg from '../static/img/icon-back.svg'
 
 export default function Inventary() {
-  const inventary = useSelector(state => state.player.inventary)
-  return (
-    <div>
-      {inventary.map(item => (
-        <div>
-          <img src={item.img} alt="" />
-          <h3>{item.name} x{item.qtd}</h3>
+    const inventary = useSelector(state => state.player.inventary);
+    const dispatch = useDispatch();
+
+    function onPlayerUseItem(item, qtd) {
+        if (item.hp > 0) {
+            dispatch(playerRemoveItem(item, qtd));
+            dispatch(playerAddHp(item.hp));
+        }
+    }
+
+    return (
+        <div className="background">
+            <div className="flex bg-black-dark justify-center align-center">
+                <Link to="/home">
+                    <img src={backImg} alt="" width={50} height={50} style={{ cursor: 'pointer', marginRight: '0.75em' }} />
+                </Link>
+                <img src={inventaryImg} alt="" width={60} height={60} />
+                <h3 className="ml-3 text-white font-26">Inventary</h3>
+            </div>
+            <div className="bg-black flex justify-center">
+                <div className="inventary-grid">
+                    {inventary.map((item, _) => (
+                        <div key={_} className="bg-grey-dark rounded-sm flex-col align-center p-2" style={{ width: 150, height: 150 }}>
+                            <div className="rounded-full bg-white-dark flex align-center justiify-center" style={{ width: 40, height: 40 }}>
+                                <img src={item.img} alt="" />
+                            </div>
+                            <h3>{item.name}</h3>
+                            <h3 className="text-white">x{item.qtd}</h3>
+                            <button onClick={() => onPlayerUseItem(item, 1)} disabled={!item.usable} className="send mt-2">Use</button>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
-      ))}
-    </div>
-  );
+    );
 }

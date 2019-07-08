@@ -52,42 +52,46 @@ export default function Login(props) {
     }
 
     return (
-        <div className="login-background">
-            <img className="mt-5" src={'https://www.tibiawiki.com.br/images/d/db/Gryphon_%28Mount%29.gif'} alt="" height={140} width={140} />
-            <div className="login-box mt-5" style={isLogged ? { height: 'auto' } : {}}>
-                <div className="flex align-center">
-                    <img src={loginImg} alt="" height={22} width={22} />
-                    <h3 className="ml-2 tittle">Login</h3>
+        <div className="background">
+            <div className="flex-col justify-center align-center">
+                <img className="mt-5" src={'https://www.tibiawiki.com.br/images/d/db/Gryphon_%28Mount%29.gif'} alt="" height={140} width={140} />
+                <div className="login-box mt-5" style={isLogged ? { height: 'auto' } : {}}>
+                    <div className="flex align-center">
+                        <img src={loginImg} alt="" height={22} width={22} />
+                        <h3 className="ml-2 tittle">Login</h3>
+                    </div>
+                    <form className="flex-col mt-1" onSubmit={(e) => makeLogin(e)}>
+                        {!isLogged && (
+                            <Fragment>
+                                <div>
+                                    <span>Account</span>
+                                    <input
+                                        onChange={(e) => setUser({ ...user, account: e.target.value })}
+                                        type="text"
+                                        required
+                                        value={user.account}
+                                    />
+                                </div>
+                                <div>
+                                    <span>Password</span>
+                                    <input
+                                        onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                        type="password"
+                                        required
+                                        value={user.password}
+                                    />
+                                </div>
+                            </Fragment>
+                        )}
+                        <button disabled={loading || isLogged} className="mx-auto mt-2 send">
+                            {(loading || isLogged) ? <img src={loadingImg} alt="" width={20} height={20} /> : "ENTRAR"}
+                        </button>
+                    </form>
                 </div>
-                <form className="flex-col mt-1" onSubmit={(e) => makeLogin(e)}>
-                    {!isLogged && (
-                        <Fragment>
-                            <div>
-                                <span>Account</span>
-                                <input
-                                    onChange={(e) => setUser({ ...user, account: e.target.value })}
-                                    type="text"
-                                    required
-                                    value={user.account}
-                                />
-                            </div>
-                            <div>
-                                <span>Password</span>
-                                <input
-                                    onChange={(e) => setUser({ ...user, password: e.target.value })}
-                                    type="password"
-                                    required
-                                    value={user.password}
-                                />
-                            </div>
-                        </Fragment>
-                    )}
-                    <button disabled={loading || isLogged} className="mx-auto mt-2 send">
-                        {(loading || isLogged) ? <img src={loadingImg} alt="" width={20} height={20} /> : "ENTRAR"}
-                    </button>
-                </form>
             </div>
-            <Toast type={toast.type} msg={toast.msg} />
+            <div className="flex justify-center">
+                <Toast type={toast.type} msg={toast.msg} />
+            </div>
         </div>
     );
 }

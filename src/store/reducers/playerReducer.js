@@ -43,21 +43,40 @@ export default function playerReducer(state = INITIAL_STATE, action) {
         case "NEW_PLAYER":
             return { ...state, ...action.payload }
         case "ADD_ITEM":
-            const item = state.inventary.find(item => item.name === action.payload.name) || null
-            const newInventary = [];
-            if (item) {
+            const itemToAdd = state.inventary.find(item => item.name === action.payload.name) || null
+            let newInventaryAfterAddItem = [];
+            if (itemToAdd) {
 
                 state.inventary.map(item => (
                     item.name === action.payload.name
-                        ? newInventary.push({ ...item, qtd: item.qtd + action.payload.qtd })
-                        : newInventary.push(item)
+                        ? newInventaryAfterAddItem.push({ ...item, qtd: item.qtd + action.payload.qtd })
+                        : newInventaryAfterAddItem.push(item)
                 ))
-                return { ...state, inventary: newInventary }
+                return { ...state, inventary: newInventaryAfterAddItem }
             } else {
                 return { ...state, inventary: [...state.inventary, action.payload] }
             }
+        case "REMOVE_ITEM":
+            const itemToRemove = state.inventary.find(item => item.name === action.payload.name) || null
+            let newInventaryAfterRemoveItem = [];
+            if (itemToRemove) {
+                const removeItemFromInventary = itemToRemove.qtd - action.payload.qtd > 0 ? false : true
+                if (removeItemFromInventary) {
+                    newInventaryAfterRemoveItem = [...state.inventary.filter(item => item.name !== action.payload.name)]
+                } else {
+                    state.inventary.map(item => (
+                        item.name === action.payload.name
+                            ? newInventaryAfterAddItem.push({ ...item, qtd: item.qtd - action.payload.qtd })
+                            : newInventaryAfterAddItem.push(item)
+                    ))
+                }
+
+                return { ...state, inventary: newInventaryAfterRemoveItem }
+            } else {
+                return { ...state }
+            }
         case "ADD_HP":
-            return { ...state, hp: state.hp + action.payload }
+            return { ...state, hp: state.hp + action.payload > state.hpMax ? state.hpMax : state.hp + action.payload }
         case "REMOVE_HP":
             return { ...state, hp: state.hp - action.payload }
         case "SET_HP":

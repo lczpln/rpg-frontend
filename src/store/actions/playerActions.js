@@ -29,3 +29,7 @@ export function playerSetHp(hp) {
 export function playerAddItem(item) {
     return { type: 'ADD_ITEM', payload: item }
 }
+
+export function playerRemoveItem(item, removeQtd) {
+    return { type: 'REMOVE_ITEM', payload: { name: item.name, qtd: removeQtd } }
+}
