@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
     isLogged: false,
+    mapSecret: '',
     name: '',
     class: '',
     img: '',
@@ -93,6 +94,8 @@ export default function playerReducer(state = INITIAL_STATE, action) {
             return { ...state, def: state.def + action.payload }
         case "ADD_EXP":
             return { ...state, exp: state.exp + action.payload }
+        case "SET_MAP_SECRET":
+            return { ...state, mapSecret: action.payload }
         case "ADD_LEVEL":
             return {
                 ...state,

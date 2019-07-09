@@ -29,14 +29,14 @@ export default function Inventary() {
                 <img src={inventaryImg} alt="" width={60} height={60} />
                 <h3 className="ml-3 text-white font-26">Inventary</h3>
             </div>
-            <div className="bg-black flex justify-center">
+            <div className="bg-black flex justify-center" style={{minHeight: 'calc(100vh - 116px)'}}>
                 <div className="inventary-grid">
                     {inventary.map((item, _) => (
                         <div key={_} className="bg-grey-dark rounded-sm flex-col align-center p-2" style={{ width: 150, height: 150 }}>
-                            <div className="rounded-full bg-white-dark flex align-center justiify-center" style={{ width: 40, height: 40 }}>
+                            <div className="rounded-full bg-white-dark flex align-center justiify-center" style={{ width: 45, height: 45 }}>
                                 <img src={item.img} alt="" />
                             </div>
-                            <h3>{item.name}</h3>
+                            <h3 className="mt-1">{item.name.split("").map((w, i) => i === 0 ? w.toUpperCase() : w)}</h3>
                             <h3 className="text-white">x{item.qtd}</h3>
                             <button onClick={() => onPlayerUseItem(item, 1)} disabled={!item.usable} className="send mt-2">Use</button>
                         </div>

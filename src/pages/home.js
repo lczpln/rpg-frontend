@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -10,16 +10,23 @@ import mapImg from '../static/img/map-icon.svg';
 import shopImg from '../static/img/shop-icon.svg';
 import inventaryImg from '../static/img/icon-inventary.svg';
 import questImg from '../static/img/icon-quest.svg';
+import LoadScreen from '../components/loadscreen';
 
 export default function Home(props) {
     const player = useSelector(state => state.player);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => { setLoading(false) }, 600);
+    }, [])
 
     return (
         <div className="background">
+            {loading && <LoadScreen text={`Cleaning your shoes...`} />}
             <div className="player-card">
                 <div className="portrait">
                     <h3 className="creature-name">{player.name}</h3>
-                    <img src={player.img} alt="" height={45} width={45}/>
+                    <img src={player.img} alt="" height={45} width={45} />
                 </div>
                 <div className="description">
                     <h3 className="description">Atk: <span>{player.atk}</span></h3>
@@ -29,7 +36,7 @@ export default function Home(props) {
                 </div>
             </div>
             <div className="flex justify-center">
-                <Link to="/battle">
+                <Link to="/map">
                     <img className="mr-4" style={{ cursor: 'pointer' }} src={mapImg} alt="" width={60} height={60} />
                 </Link>
                 <Link to="/shop">
@@ -42,7 +49,7 @@ export default function Home(props) {
                     <img style={{ cursor: 'pointer' }} src={questImg} alt="" width={60} height={60} />
                 </Link>
             </div>
-            <PlayerBars player={player} />
+            {!loading && <PlayerBars player={player} />}
         </div>
     );
 }

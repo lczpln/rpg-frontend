@@ -8,6 +8,7 @@ import Login from './pages/login';
 import Home from './pages/home';
 import Battle from './pages/battle';
 import Inventary from './pages/inventary';
+import Map from './pages/map';
 
 export default function Routes() {
     return (
@@ -16,7 +17,8 @@ export default function Routes() {
                 <Switch>
                     <Route exact path="/" component={Login} />
                     <Route exact path="/home" component={Home} />
-                    <Route exact path="/battle" component={Battle} />
+                    <Route exact path="/map" component={Map} />
+                    <Route exact path="/battle/:id/:secret" component={Battle} />
                     <Route exact path="/inventary" component={Inventary} />
                 </Switch>
             </Auth>

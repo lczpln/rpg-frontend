@@ -30,6 +30,10 @@ export function playerAddItem(item) {
     return { type: 'ADD_ITEM', payload: item }
 }
 
+export function setMapSecret(secret) {
+    return { type: 'SET_MAP_SECRET', payload: secret }
+}
+
 export function playerRemoveItem(item, removeQtd) {
     return { type: 'REMOVE_ITEM', payload: { name: item.name, qtd: removeQtd } }
 }
