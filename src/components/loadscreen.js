@@ -23,9 +23,9 @@ export default function LoadScreen({ text }) {
 
     return (
         <div className="flex-col align-center justify-center absolute pin bg-ocean-dark">
-            <img src={monsterImg} alt="" height={120} width={120} />
+            <img src={monsterImg} alt="" height={70} width={70} />
             <img className="mt-1" src={loadingImg} alt="" width={20} height={20} />
-            <h3 className="mt-2">{text}</h3>
+            <h3 className="mt-2 font-16">{text}</h3>
         </div>
     );
 }

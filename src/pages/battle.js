@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 
 import api from '../static/services/api';
 
@@ -16,6 +16,8 @@ import {
 import LoadScreen from '../components/loadscreen';
 
 export default function Battle(props) {
+    const [playerAttackEffect, setPlayerAttackEffect] = useState('');
+    const [monsterAttackEffect, setMonsterAttackEffect] = useState('');
     const [loading, setLoading] = useState(true);
     const [monster, setMonster] = useState({})
     const [battleEndMessage, setBattleEndMessage] = useState('');
@@ -54,7 +56,7 @@ export default function Battle(props) {
             setBattleEndMessage(`${(monster.name.split("").map((w, _) => _ === 0 ? w.toUpperCase() : w)).join("")} is defeated, you gain ${monster.exp} experience points.`)
             setPlayerTurn(false);
         } else {
-            if (!playerTurn) monsterAttack()
+            if (!playerTurn) setTimeout(() => { monsterAttack() }, 1500);
         }
     }, [monster.hp])
 
@@ -75,7 +77,7 @@ export default function Battle(props) {
 
         setMonster(response.data)
         setDrops(dropArray)
-        setTimeout(() => { setLoading(false) }, 600);
+        setTimeout(() => { setLoading(false) }, 1000);
     }
 
     function checkBattleStatus(creature) {
@@ -100,30 +102,29 @@ export default function Battle(props) {
 
     function monsterAttack() {
         const atkFormula = ((Math.floor(Math.random() * 6) + monster.atk) - player.def) - (Math.floor(Math.random() * -3));
-
+        applyMonsterAttackEffect()
         if (atkFormula > 0) {
             if (player.hp - atkFormula < 0) {
-                dispatch(playerSetHp(0))
+                setTimeout(() => { dispatch(playerSetHp(0)) }, 500)
             } else {
-                dispatch(playerRemoveHp(atkFormula))
+                setTimeout(() => { dispatch(playerRemoveHp(atkFormula)) }, 500)
             }
         } else {
-            dispatch(playerRemoveHp(1))
+            setTimeout(() => { dispatch(playerRemoveHp(1)) }, 500)
         }
     }
 
     function playerAtk() {
         const atkFormula = ((Math.floor(Math.random() * 6) + player.atk) - monster.def) - (Math.floor(Math.random() * -3));
-
+        applyPlayerAttackEffect()
         if (atkFormula > 0) {
             if (monster.hp - atkFormula < 0) {
-                setMonster({ ...monster, hp: 0 })
+                setTimeout(() => { setMonster({ ...monster, hp: 0 }) }, 500)
             } else {
-                setMonster({ ...monster, hp: monster.hp - atkFormula })
-
+                setTimeout(() => { setMonster({ ...monster, hp: monster.hp - atkFormula }) }, 500)
             }
         } else {
-            setMonster({ ...monster, hp: monster.hp - 1 })
+            setTimeout(() => { setMonster({ ...monster, hp: monster.hp - 1 }) }, 500)
         }
         setPlayerTurn(false);
     }
@@ -136,24 +137,30 @@ export default function Battle(props) {
         dispatch(playerAddItem(item));
     }
 
+    function applyPlayerAttackEffect() {
+        setPlayerAttackEffect('walkBot')
+        setTimeout(() => { setPlayerAttackEffect('') }, 1500)
+    }
+
+    function applyMonsterAttackEffect() {
+        setMonsterAttackEffect('walkTop')
+        setTimeout(() => { setMonsterAttackEffect('') }, 1500)
+    }
+
     return (
         ((player.mapSecret) || (player.mapSecret === props.match.params.secret) || (monster && monster.hp <= 0) || (player.hp <= 0)) ? (
-            <div>
-                <div>
+            <Fragment>
+                <div className={`${playerAttackEffect} absolute pin-t flex-col align-center justify-center pt-5`} style={{ width: '100vw' }}>
                     <h3>{player.name}</h3>
-                    <img src={player.img} alt="" />
+                    <img src={player.img} alt="" width={45} height={45} />
+                    <h3 className="mt-2">{player.hp} / {player.hpMax}</h3>
                 </div>
-                <div className="flex">
-                    <h3>{player.hp} / {player.hpMax}</h3>
-                </div>
-                <div>
-                    <h3>{monster.name}</h3>
-                    <img src={monster.img} alt="" />
-                </div>
-                <div className="flex">
+                <div className={`${monsterAttackEffect} flex-col absolute pin-b align-center justify-center pb-5`} style={{ width: '100vw' }}>
+                    <h3 style={{ textTransform: 'capitalize' }}>{monster.name}</h3>
+                    <img className="rotate-180" src={monster.img} alt="" width={45} height={45} />
                     <h3>{monster.hp} / {monster.hpMax}</h3>
                 </div>
-                <button disabled={!playerTurn} onClick={() => playerAtk()} className="send">Attack</button>
+                <button disabled={!playerTurn} onClick={() => playerAtk()} className="send absolute pin-t">Attack</button>
                 {battleStatus.monsterDead && (
                     <div>
                         <h3>Loot:</h3>
@@ -180,7 +187,7 @@ export default function Battle(props) {
                     </div>
                 )}
                 {loading && <LoadScreen text={`Searching for monsters...`} />}
-            </div>
+            </Fragment>
         ) : (
                 <LoadScreen text={`Ops! 404 :(`} />
             )
