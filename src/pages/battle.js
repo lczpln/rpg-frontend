@@ -15,7 +15,11 @@ import {
 } from '../store/actions/playerActions';
 import LoadScreen from '../components/loadscreen';
 
+import bloodImg from '../static/img/blood-effect.gif';
+
 export default function Battle(props) {
+    const [playerBloodEffect, setPlayerBloodEffect] = useState(false);
+    const [monsterBloodEffect, setMonsterBloodEffect] = useState(false);
     const [playerAttackEffect, setPlayerAttackEffect] = useState('');
     const [monsterAttackEffect, setMonsterAttackEffect] = useState('');
     const [loading, setLoading] = useState(true);
@@ -61,7 +65,7 @@ export default function Battle(props) {
     }, [monster.hp])
 
     async function getMonsterData() {
-        const response = await api.get('/monsters/rat');
+        const response = await api.get('/monsters/frog');
 
         if (!response) return;
 
@@ -139,25 +143,41 @@ export default function Battle(props) {
 
     function applyPlayerAttackEffect() {
         setPlayerAttackEffect('walkBot')
-        setTimeout(() => { setPlayerAttackEffect('') }, 1500)
+        setTimeout(() => { setMonsterBloodEffect(true) }, 500)
+        setTimeout(() => { setPlayerAttackEffect(''); setMonsterBloodEffect(false) }, 1500)
     }
 
     function applyMonsterAttackEffect() {
         setMonsterAttackEffect('walkTop')
-        setTimeout(() => { setMonsterAttackEffect('') }, 1500)
+        setTimeout(() => { setPlayerBloodEffect(true) }, 500)
+        setTimeout(() => { setMonsterAttackEffect(''); setPlayerBloodEffect(false) }, 1500)
     }
 
     return (
         ((player.mapSecret) || (player.mapSecret === props.match.params.secret) || (monster && monster.hp <= 0) || (player.hp <= 0)) ? (
             <Fragment>
-                <div className={`${playerAttackEffect} absolute pin-t flex-col align-center justify-center pt-5`} style={{ width: '100vw' }}>
-                    <h3>{player.name}</h3>
-                    <img src={player.img} alt="" width={45} height={45} />
+                <div className={`absolute pin-t flex-col align-center justify-center pt-5`} style={{ width: '100vw' }}>
+                    <div className={`${playerAttackEffect} relative`}>
+                        <h3>{player.name}</h3>
+                        {playerBloodEffect && (
+                            <div className="absolute pin flex justify-center align-center">
+                                <img src={bloodImg} alt="" width={45} height={45} />
+                            </div>
+                        )}
+                        <img src={player.img} alt="" width={45} height={45} />
+                    </div>
                     <h3 className="mt-2">{player.hp} / {player.hpMax}</h3>
                 </div>
-                <div className={`${monsterAttackEffect} flex-col absolute pin-b align-center justify-center pb-5`} style={{ width: '100vw' }}>
-                    <h3 style={{ textTransform: 'capitalize' }}>{monster.name}</h3>
-                    <img className="rotate-180" src={monster.img} alt="" width={45} height={45} />
+                <div className={`flex-col absolute pin-b align-center justify-center pb-5`} style={{ width: '100vw' }}>
+                    <div className={`${monsterAttackEffect} relative`}>
+                        <h3 style={{ textTransform: 'capitalize' }}>{monster.name}</h3>
+                        {monsterBloodEffect && (
+                            <div className="absolute pin flex justify-center align-center">
+                                <img src={bloodImg} alt="" width={45} height={45} />
+                            </div>
+                        )}
+                        <img className={monster.hp > 0 && "rotate-180"} src={monster.hp > 0 ? monster.img : monster.imgDead} alt="" width={45} height={45} />
+                    </div>
                     <h3>{monster.hp} / {monster.hpMax}</h3>
                 </div>
                 <button disabled={!playerTurn} onClick={() => playerAtk()} className="send absolute pin-t">Attack</button>

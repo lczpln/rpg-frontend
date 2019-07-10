@@ -17,18 +17,12 @@
   cursor: default;
 }
 
-@media screen and(max-width: 500px) {
-  .game-map {
-    transform: rotate(90deg);
-  }
-}
-
 .walkTop {
-  animation: walkTop 1.5s ease-in-out;
+  animation: walkTop 1s ease-in-out;
 }
 
 .walkBot {
-  animation: walkBot 1.5s ease-in-out;
+  animation: walkBot 1s ease-in-out;
 }
 
 @keyframes walkTop {
@@ -36,7 +30,7 @@
     transform: translate(0, 0%);
   }
   50% {
-    transform: translate(0, -420%);
+    transform: translate(0, -65vh);
   }
   100% {
     transform: translate(0, 0%);
@@ -48,7 +42,7 @@
     transform: translate(0, 0%);
   }
   50% {
-    transform: translate(0, 420%);
+    transform: translate(0, 70vh);
   }
   100% {
     transform: translate(0, 0%);
