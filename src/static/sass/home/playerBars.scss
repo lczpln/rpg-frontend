@@ -1,0 +1,70 @@
+@import "../styleGuide.scss";
+
+div.home-bars {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: $ocean-dark;
+}
+
+div.home-back-bar {
+  border-top: 2px solid rgba(255, 255, 255, 0.065);
+  background-color: rgba(255, 255, 255, 0.065);
+  position: relative;
+  width: 100% !important;
+}
+
+div.home-exp-bar {
+  transition: all 0.4s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(to right, $golden-dark, $golden);
+  height: 36px;
+}
+
+div.home-hp-bar {
+  transition: all 0.4s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(to right, $danger-dark, $danger);
+  height: 48px;
+}
+
+div.home-mp-bar {
+  transition: all 0.4s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(to right, $sky-dark, $sky);
+  height: 48px;
+}
+
+div.home-hp-bar div,
+div.home-mp-bar div,
+div.home-exp-bar div {
+  position: absolute;
+  background: transparent;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.home-hp-bar img,
+div.home-mp-bar img,
+div.home-exp-bar img {
+  position: absolute;
+  left: 20%;
+}
+
+div.home-hp-bar div > h3,
+div.home-mp-bar div > h3,
+div.home-exp-bar div > h3 {
+  color: $white;
+  font-size: calc(1vw + 16px);
+}
