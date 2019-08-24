@@ -52,7 +52,7 @@ export default function Login(props) {
     }
 
     return (
-        <div className="background">
+        <content>
             <div className="flex-col justify-center align-center">
                 <img className="mt-5" src={'https://www.tibiawiki.com.br/images/d/db/Gryphon_%28Mount%29.gif'} alt="" height={140} width={140} />
                 <div className="login-box mt-5" style={isLogged ? { height: 'auto' } : {}}>
@@ -92,6 +92,6 @@ export default function Login(props) {
             <div className="flex justify-center">
                 <Toast type={toast.type} msg={toast.msg} />
             </div>
-        </div>
+        </content>
     );
 }

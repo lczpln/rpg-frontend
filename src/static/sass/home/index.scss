@@ -12,14 +12,6 @@ div.player-card {
   align-items: center;
 }
 
-button.play {
-  width: 200px;
-  height: 200px;
-  font-size: 3rem;
-  border-radius: 50% !important;
-  margin: 20px auto;
-}
-
 div.player-card div.portrait {
   border-radius: 50%;
   width: 110px;
@@ -33,7 +25,7 @@ div.player-card div.portrait {
 
 div.description {
   flex: 1;
-  padding-left: 50px;
+  padding-left: 25px;
 }
 
 div.player-card h3.description {

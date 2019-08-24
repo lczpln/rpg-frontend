@@ -15,11 +15,11 @@ export default function Routes() {
         <BrowserRouter>
             <Auth>
                 <Switch>
-                    <Route exact path="/" component={Login} />
-                    <Route exact path="/home" component={Home} />
-                    <Route exact path="/map" component={Map} />
-                    <Route exact path="/battle/:id/:secret" component={Battle} />
-                    <Route exact path="/inventary" component={Inventary} />
+                        <Route exact path="/" component={Login} />
+                        <Route exact path="/home" component={Home} />
+                        <Route exact path="/map" component={Map} />
+                        <Route exact path="/battle/:id/:secret" component={Battle} />
+                        <Route exact path="/inventary" component={Inventary} />
                 </Switch>
             </Auth>
         </BrowserRouter>

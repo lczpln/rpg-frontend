@@ -1,0 +1,48 @@
+.walkTop {
+  animation: walkTopAnimation ease-in-out;
+  animation-duration: 2s;
+}
+
+.walkBot {
+  animation: walkBotAnimation ease-in-out;
+  animation-duration: 2s;
+}
+
+@keyframes walkTopAnimation {
+  0% {
+    top: initial;
+  }
+  50% {
+    top: 15%;
+  }
+  60% {
+    top: 15%;
+  }
+
+  100% {
+    top: initial;
+  }
+}
+
+@keyframes walkBotAnimation {
+  0% {
+    top: initial;
+  }
+  50% {
+    top: 75%;
+  }
+  60% {
+    top: 75%;
+  }
+  100% {
+    top: initial;
+  }
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}

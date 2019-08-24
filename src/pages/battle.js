@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 
+import '../static/sass/battle.scss';
+
 import {
     playerRemoveHp,
     playerAddExp,
@@ -36,7 +38,6 @@ export default function Battle(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(props)
         if (!player.mapSecret || player.mapSecret !== props.match.params.secret) {
             return props.history.push("/home");
         }
@@ -49,7 +50,9 @@ export default function Battle(props) {
             dispatch(setMapSecret(''))
             setBattleEndMessage(`You went defeated by ${(monster.name.split("").map((w, _) => _ === 0 ? w.toUpperCase() : w)).join("")}.`)
         } else {
-            setPlayerTurn(true);
+            setTimeout(() => {
+                setPlayerTurn(true);
+            }, 1000)
         }
     }, [player.hp])
 
@@ -57,7 +60,9 @@ export default function Battle(props) {
         if (checkBattleStatus('monster')) {
             dispatch(playerAddExp(monster.exp))
             dispatch(setMapSecret(''))
-            setBattleEndMessage(`${(monster.name.split("").map((w, _) => _ === 0 ? w.toUpperCase() : w)).join("")} is defeated, you gain ${monster.exp} experience points.`)
+            setTimeout(() => {
+                setBattleEndMessage(`${(monster.name.split("").map((w, _) => _ === 0 ? w.toUpperCase() : w)).join("")} is defeated, you gain ${monster.exp} experience points.`)
+            }, 1000)
             setPlayerTurn(false);
         } else {
             if (!playerTurn) setTimeout(() => { monsterAttack() }, 1500);
@@ -65,7 +70,7 @@ export default function Battle(props) {
     }, [monster.hp])
 
     async function getMonsterData() {
-        const response = await api.get('/monsters/frog');
+        const response = await api.get('/monsters/rat');
 
         if (!response) return;
 
@@ -156,29 +161,45 @@ export default function Battle(props) {
     return (
         ((player.mapSecret) || (player.mapSecret === props.match.params.secret) || (monster && monster.hp <= 0) || (player.hp <= 0)) ? (
             <Fragment>
-                <div className={`absolute pin-t flex-col align-center justify-center pt-5`} style={{ width: '100vw' }}>
-                    <div className={`${playerAttackEffect} relative`}>
-                        <h3>{player.name}</h3>
+                <div className={`flex align-center justify-center pt-5`} style={{ width: '100vw' }}>
+                    <div className={`${playerAttackEffect} absolute pt-5`}>
+                        <h3 style={{ zIndex: 1 }}>{player.name}</h3>
                         {playerBloodEffect && (
                             <div className="absolute pin flex justify-center align-center">
-                                <img src={bloodImg} alt="" width={45} height={45} />
+                                <img
+                                    src={bloodImg}
+                                    alt=""
+                                    style={{ transform: 'scale(1.2)' }}
+                                />
                             </div>
                         )}
-                        <img src={player.img} alt="" width={45} height={45} />
+                        <img
+                            src={player.img}
+                            alt=""
+                            style={{ transform: 'scale(1.2)' }}
+                        />
                     </div>
-                    <h3 className="mt-2">{player.hp} / {player.hpMax}</h3>
+                    <h3 className={`absolute pin-t`} style={{ top: 60 }}>{player.hp} / {player.hpMax}</h3>
                 </div>
-                <div className={`flex-col absolute pin-b align-center justify-center pb-5`} style={{ width: '100vw' }}>
-                    <div className={`${monsterAttackEffect} relative`}>
+                <div className={`flex-col align-center justify-center`} style={{ width: '100vw' }}>
+                    <div className={`${monsterAttackEffect} absolute pin-b pb-5`}>
                         <h3 style={{ textTransform: 'capitalize' }}>{monster.name}</h3>
                         {monsterBloodEffect && (
                             <div className="absolute pin flex justify-center align-center">
-                                <img src={bloodImg} alt="" width={45} height={45} />
+                                <img
+                                    src={bloodImg}
+                                    alt=""
+                                    style={{ transform: 'scale(1.2)' }}
+                                />
                             </div>
                         )}
-                        <img className={monster.hp > 0 && "rotate-180"} src={monster.hp > 0 ? monster.img : monster.imgDead} alt="" width={45} height={45} />
+                        <img
+                            src={monster.hp > 0 ? monster.img : monster.imgDead}
+                            alt=""
+                            style={{ transform: 'scale(1.2) rotate(180deg)' }}
+                        />
                     </div>
-                    <h3>{monster.hp} / {monster.hpMax}</h3>
+                    <h3 className={`absolute pin-b`}>{monster.hp} / {monster.hpMax}</h3>
                 </div>
                 <button disabled={!playerTurn} onClick={() => playerAtk()} className="send absolute pin-t">Attack</button>
                 {battleStatus.monsterDead && (

@@ -1,8 +1,8 @@
 @import "../styleGuide.scss";
 
 div.home-bars {
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  bottom: 0 !important;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -14,6 +14,7 @@ div.home-back-bar {
   background-color: rgba(255, 255, 255, 0.065);
   position: relative;
   width: 100% !important;
+  height: 100% !important;
 }
 
 div.home-exp-bar {
@@ -22,7 +23,7 @@ div.home-exp-bar {
   align-items: center;
   justify-content: center;
   background-image: linear-gradient(to right, $golden-dark, $golden);
-  height: 36px;
+  height: 48px;
 }
 
 div.home-hp-bar {

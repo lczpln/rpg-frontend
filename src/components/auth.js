@@ -30,7 +30,7 @@ export default function Auth({ children }) {
         try {
             await api.put(`/player/${player._id}`, player);
         } catch (error) {
-            return alert("Player save error, you lost connect to server ?");
+            return alert("Player save error, you lost connection to server ?");
         }
     }
 
